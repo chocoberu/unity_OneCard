@@ -79,7 +79,7 @@ public class Card : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Debug.Log(m_Type + " " + m_Number + " " + m_Owner);
+        //Debug.Log(m_Type + " " + m_Number + " " + m_Owner);
         switch(m_Owner)
         {
             case CARD_OWNER.DECK:

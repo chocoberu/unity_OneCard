@@ -138,6 +138,18 @@ public class BoardCtrl : MonoBehaviour
         SetCurrentTypeText();
         SetTotalDamText();
 
+        //Debug.Log(player.playerDeck.Count);
+        if(player.playerDeck.Count == 0)
+        {
+            Debug.Log("Player Win!");
+            player.gameObject.SetActive(false);
+        }
+        if(enemy.enemyDeck.Count == 0)
+        {
+            Debug.Log("Enemy Win!");
+            enemy.gameObject.SetActive(false);
+        }
+
         SetPlayerTurn(currCardNum);
     }
     public void SendCardToPlayer()

@@ -91,7 +91,6 @@ public class EnemyCtrl : MonoBehaviour
         {
             if (curCardDam <= cardDam)
             {
-                board.ReceiveCardFromPlayer(card);
                 for (int i = 0; i < enemyDeck.Count; i++)
                 {
                     if (enemyDeck[i] == card)
@@ -100,6 +99,8 @@ public class EnemyCtrl : MonoBehaviour
                         break;
                     }
                 }
+                board.ReceiveCardFromPlayer(card);
+
                 SetCardPos();
                 SetCntText();
             }

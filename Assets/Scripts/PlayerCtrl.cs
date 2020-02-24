@@ -121,7 +121,6 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (curCardDam <= cardDam)
             {
-                board.ReceiveCardFromPlayer(card);
                 for (int i = 0; i < playerDeck.Count; i++)
                 {
                     if (playerDeck[i] == card)
@@ -130,15 +129,16 @@ public class PlayerCtrl : MonoBehaviour
                         break;
                     }
                 }
+                board.ReceiveCardFromPlayer(card);
                 SetCardPos();
                 SetCntText();
             }
         }
-        if(playerDeck.Count == 0)
-        {
-            Debug.Log("Player Win!");
-            this.gameObject.SetActive(false);
-        }
+        //if(playerDeck.Count == 0)
+        //{
+        //    Debug.Log("Player Win!");
+        //    this.gameObject.SetActive(false);
+        //}
     }
     public void SetCurrentListOffset(int offset)
     {

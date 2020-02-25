@@ -30,6 +30,7 @@ public class BoardCtrl : MonoBehaviour
     {
         usedCardList = new List<GameObject>();
         usedCardPos = new Vector3(0, 0, 0);
+        deckPos = new Vector3(5, 0, 0);
         ShuffleCard();
         InitDeck();
         currPlayerTurn = Random.Range(0, 100) % 2; // 0이면 플레이어 턴, 1이면 에너미 턴
@@ -192,6 +193,7 @@ public class BoardCtrl : MonoBehaviour
         {
             deck.Add(usedCardList[i]);
             usedCardList[i].GetComponent<Card>().SetCardOwner(CARD_OWNER.DECK);
+            usedCardList[i].transform.position = deckPos;
             usedCardList.RemoveAt(i);
             //i++;
         }

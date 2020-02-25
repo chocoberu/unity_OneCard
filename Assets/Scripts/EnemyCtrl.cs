@@ -91,14 +91,7 @@ public class EnemyCtrl : MonoBehaviour
         {
             if (curCardDam <= cardDam)
             {
-                for (int i = 0; i < enemyDeck.Count; i++)
-                {
-                    if (enemyDeck[i] == card)
-                    {
-                        enemyDeck.RemoveAt(i);
-                        break;
-                    }
-                }
+                enemyDeck.Remove(card);
                 board.ReceiveCardFromPlayer(card);
 
                 SetCardPos();

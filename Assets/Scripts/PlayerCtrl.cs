@@ -121,24 +121,12 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (curCardDam <= cardDam)
             {
-                for (int i = 0; i < playerDeck.Count; i++)
-                {
-                    if (playerDeck[i] == card)
-                    {
-                        playerDeck.RemoveAt(i);
-                        break;
-                    }
-                }
+                playerDeck.Remove(card);
                 board.ReceiveCardFromPlayer(card);
                 SetCardPos();
                 SetCntText();
             }
         }
-        //if(playerDeck.Count == 0)
-        //{
-        //    Debug.Log("Player Win!");
-        //    this.gameObject.SetActive(false);
-        //}
     }
     public void SetCurrentListOffset(int offset)
     {

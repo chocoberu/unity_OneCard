@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BoardCtrl : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class BoardCtrl : MonoBehaviour
     public Text currTypeText;
     public Text totalDamText;
     public GameObject ui7;
+    public Text pWin;
+    public Text eWin;
+    public Button Retry;
+    public Button Exit;
     int tempTurn;
 
     // Start is called before the first frame update
@@ -142,13 +147,11 @@ public class BoardCtrl : MonoBehaviour
         //Debug.Log(player.playerDeck.Count);
         if(player.playerDeck.Count == 0)
         {
-            Debug.Log("Player Win!");
-            player.gameObject.SetActive(false);
+            SetWinner(0);
         }
         if(enemy.enemyDeck.Count == 0)
         {
-            Debug.Log("Enemy Win!");
-            enemy.gameObject.SetActive(false);
+            SetWinner(1);
         }
 
         SetPlayerTurn(currCardNum);
@@ -236,7 +239,7 @@ public class BoardCtrl : MonoBehaviour
     }
     void SetTotalDamText()
     {
-        string tmp = "누적 데미지 : ";
+        string tmp = "누적 카드 : ";
         tmp += sumCardDam.ToString();
         totalDamText.text = tmp;
     }
@@ -267,5 +270,37 @@ public class BoardCtrl : MonoBehaviour
         ui7.gameObject.SetActive(false);
         SetPlayerTurn(15);
         SetCurrentTypeText();
+    }
+    void SetWinner(int n)
+    {
+        if(n == 0)
+        {
+            Debug.Log("Player Win!");
+            player.gameObject.SetActive(false);
+            pWin.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Enemy Win!");
+            enemy.gameObject.SetActive(false);
+            eWin.gameObject.SetActive(true);
+        }
+        Retry.gameObject.SetActive(true);
+        Exit.gameObject.SetActive(true);
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // play 모드를 false
+#elif UNITY_WEBPLAYER
+        Application.OpenURL("https://google.com"); // 구글로 진입
+#else
+        Application.Quit(); // 앱 종료
+#endif
+
     }
 }

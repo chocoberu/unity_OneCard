@@ -64,17 +64,17 @@ public class BoardCtrl : MonoBehaviour
             if (player)
             {
                 player.AddCard(deck[deck.Count - 1]);
-                deck[deck.Count - 1].GetComponent<Card>().SetCardOwner(CARD_OWNER.PLAYER);
+                //deck[deck.Count - 1].GetComponent<Card>().SetCardOwner(CARD_OWNER.PLAYER);
                 deck[deck.Count - 1].transform.parent = player.gameObject.transform;
-                //Debug.Log(deck[deck.Count - 1].gameObject.name);
+                Debug.Log(deck[deck.Count - 1].gameObject.name + " " + deck[deck.Count - 1].GetComponent<Card>().GetCardOwner());
                 deck.RemoveAt(deck.Count - 1);
             }
             if(enemy)
             {
                 enemy.AddCard(deck[deck.Count - 1]);
-                deck[deck.Count - 1].GetComponent<Card>().SetCardOwner(CARD_OWNER.ENEMY);
+                //deck[deck.Count - 1].GetComponent<Card>().SetCardOwner(CARD_OWNER.ENEMY);
                 deck[deck.Count - 1].transform.parent = enemy.gameObject.transform;
-                //Debug.Log(deck[deck.Count - 1].gameObject.name);
+                Debug.Log(deck[deck.Count - 1].gameObject.name + " " + deck[deck.Count - 1].GetComponent<Card>().GetCardOwner());
                 deck.RemoveAt(deck.Count - 1);
             }
         }

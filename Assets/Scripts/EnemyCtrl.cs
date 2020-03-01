@@ -7,10 +7,13 @@ public class EnemyCtrl : MonoBehaviour
 {
     public List<GameObject> enemyDeck;
     public bool isEnemyTurn;
+    public bool leftDown;
+    public bool rightDown;
     float firstCardPosX = -7.0f;
     float firstCardPosY = 3.5f;
     float firstCardPosZ = -1.0f;
-    int currListOffset = 0;
+    public int currListOffset = 0;
+    int maxListOffset = 0;
     private BoardCtrl board;
     public Text enemyCnt;
     public Image turn;
@@ -34,8 +37,13 @@ public class EnemyCtrl : MonoBehaviour
     public void AddCard(GameObject card)
     {
         enemyDeck.Add(card);
+        if ((enemyDeck.Count - 1) / 10 > maxListOffset)
+        {
+            maxListOffset = (enemyDeck.Count - 1) / 10;
+        }
         //isChange = true;
         card.transform.position = deckPos;
+        card.GetComponent<Card>().SetCardOwner(CARD_OWNER.ENEMY);
         SetCardPos();
         SetCntText();
     }
@@ -47,14 +55,37 @@ public class EnemyCtrl : MonoBehaviour
     }
     void SetCardPos()
     {
-        for (int i = currListOffset; i < enemyDeck.Count; i++)
+        if (enemyDeck.Count <= 0)
+            return;
+        if (currListOffset > 0 && rightDown)
         {
-            enemyDeck[i].transform.position = new Vector3(firstCardPosX + i * 1.5f, firstCardPosY, firstCardPosZ);
-            enemyDeck[currListOffset * 10 + i].GetComponent<Card>().SetCardOwner(CARD_OWNER.ENEMY);
-            enemyDeck[currListOffset * 10 + i].transform.parent = this.gameObject.transform;
+            for (int i = 0; i < 10; i++)
+            {
+                //Debug.Log((currListOffset - 1) * 10 + i);
+                enemyDeck[(currListOffset - 1) * 10 + i].transform.position = deckPos;
+            }
+        }
+        if (currListOffset < maxListOffset && leftDown)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                //Debug.Log((currListOffset - 1) * 10 + i);
+                enemyDeck[(currListOffset + 1) * 10 + i].transform.position = deckPos;
+                if ((currListOffset + 1) * 10 + i == enemyDeck.Count - 1)
+                    break;
+            }
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            enemyDeck[currListOffset * 10 + i].transform.position = new Vector3(firstCardPosX + i * 1.5f, firstCardPosY, firstCardPosZ);
+            //playerDeck[currListOffset * 10 + i].GetComponent<Card>().SetCardOwner(CARD_OWNER.PLAYER);
+            //playerDeck[currListOffset * 10 + i].transform.parent = this.gameObject.transform;
             if (i == 9)
                 break;
+            if (currListOffset * 10 + i == enemyDeck.Count - 1)
+                break;
         }
+        leftDown = rightDown = false;
     }
     public void SetEnemyTurn()
     {
@@ -93,10 +124,25 @@ public class EnemyCtrl : MonoBehaviour
             {
                 enemyDeck.Remove(card);
                 board.ReceiveCardFromPlayer(card);
-
+                maxListOffset = (enemyDeck.Count - 1) / 10;
+                if (maxListOffset < currListOffset)
+                    currListOffset = maxListOffset;
                 SetCardPos();
                 SetCntText();
             }
         }
+    }
+    public void SetCurrentListOffset(int offset)
+    {
+        currListOffset = offset;
+        SetCardPos();
+    }
+    public int GetCurrentListOffset()
+    {
+        return currListOffset;
+    }
+    public int GetMaxListOffset()
+    {
+        return maxListOffset;
     }
 }

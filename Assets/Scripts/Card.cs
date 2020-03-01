@@ -71,6 +71,7 @@ public class Card : MonoBehaviour
     }
     public void SetCardOwner(CARD_OWNER owner)
     {
+        Debug.Log(owner);
         m_Owner = owner;
     }
     public CARD_OWNER GetCardOwner()
@@ -79,21 +80,34 @@ public class Card : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        //Debug.Log(m_Type + " " + m_Number + " " + m_Owner);
-        switch(m_Owner)
+        Debug.Log(m_Type + " " + m_Number + " " + m_Owner);
+        //switch (m_Owner)
+        //{
+        //    //case CARD_OWNER.DECK:
+        //    //    if (board)
+        //    //        board.SendCardToPlayer();
+        //    //    break;
+        //    case CARD_OWNER.PLAYER:
+        //        if (player)
+        //            player.SendCardFromDeck(this.gameObject);
+        //        break;
+        //    case CARD_OWNER.ENEMY:
+        //        if (enemy)
+        //            enemy.SendCardFromDeck(this.gameObject);
+        //        break;
+        //}
+        string tmp = transform.parent.name;
+        if(tmp.Equals("Player"))
         {
-            case CARD_OWNER.DECK:
-                if (board)
-                    board.SendCardToPlayer();
-                break;
-            case CARD_OWNER.PLAYER:
-                if (player)
-                    player.SendCardFromDeck(this.gameObject);
-                break;
-            case CARD_OWNER.ENEMY:
-                if (enemy)
-                    enemy.SendCardFromDeck(this.gameObject);
-                break;
+            player.SendCardFromDeck(this.gameObject);
+        }
+        if (tmp.Equals("Enemy"))
+        {
+            enemy.SendCardFromDeck(this.gameObject);
+        }
+        if (tmp.Equals("Board"))
+        {
+            board.SendCardToPlayer();
         }
     }
 }

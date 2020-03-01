@@ -43,6 +43,7 @@ public class PlayerCtrl : MonoBehaviour
             maxListOffset = (playerDeck.Count - 1) / 10;
         }
         card.transform.position = deckPos;
+        card.GetComponent<Card>().SetCardOwner(CARD_OWNER.PLAYER);
         SetCardPos();
         SetCntText();
     }
@@ -123,6 +124,9 @@ public class PlayerCtrl : MonoBehaviour
             {
                 playerDeck.Remove(card);
                 board.ReceiveCardFromPlayer(card);
+                maxListOffset = (playerDeck.Count - 1) / 10;
+                if (maxListOffset < currListOffset)
+                    currListOffset = maxListOffset;
                 SetCardPos();
                 SetCntText();
             }
